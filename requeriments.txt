@@ -1,0 +1,18 @@
+#Comando para ejecutar el txt conda install --yes --file requirements.txt
+easygui
+SpeechRecognition
+pyaudio
+tensorflow-gpu
+keras
+scipy
+scikit-learn
+opencv-python
+h5py
+matplotlib
+pywin32
+pymedia
+pymongo
+imutils
+django
+djongo
+requests 
