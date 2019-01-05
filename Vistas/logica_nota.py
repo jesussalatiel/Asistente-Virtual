@@ -34,7 +34,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_3.setText('Visito: {}'.format(data_invitado[3]))
         self.label_4.setText('Email: {}'.format(data_invitado[1]))
         self.textEdit.setText(data_invitado[2])
-
+        #Verificamos si el usuario dejo una nota de voz para desplegar el boton
+        if data_invitado[4] == None:
+            self.pushButton_3.setGeometry(0, 0, 0, 0)
+            self.pushButton_3.setEnabled(False)
+        
+            
     def notificar(self):
         print("Notificar")
 
@@ -45,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def delete(self):
         if (db.deleteData(self._invitado)) == 1:
             print('Eliminado Exitosamente')    
-        self.closeAll()
+        self.close()
 
     #Control del evento cerrar que es mostrado en la ventana
     def closeEvent(self, event):
@@ -55,7 +60,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #Metodo encargado de liberar memoria al cerra las ventana
     def closeAll(self):
         # Eliminamos la carpeta temporal
-        #shutil.rmtree(self.path)
+        shutil.rmtree(self.path)
         self.close()
     
     # Metodo encargado de buscar la imagen

@@ -63,6 +63,7 @@ def dataInvitado(id):
         information.append(data['email'])
         information.append(data['nota'])
         information.append(data['date'])
+        information.append(data['path_nota_voz'])
     #Retornamos los todos los datos almacenados anteriormente 
     return(information[:])
 
