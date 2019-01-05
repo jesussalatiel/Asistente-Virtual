@@ -4,6 +4,8 @@ import datetime
 from bson.objectid import ObjectId
 import os
 
+################### Parametros Genrales de BD ######################################
+####################################################################################
 #Conexion a la base de datos
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 #Seleccion de la base de datos
@@ -12,11 +14,15 @@ database = myclient['asistente']
 table_notas = database['Notas']
 invitado_conocido = database['Conocidos']
 root = database['Administradores']
+####################################################################################
 
-def safeData(name, email, nota, imagen, type, audio):
-        
+
+#Metodo encargado de guardar las notas en la base de datos 
+def safeData(name, email, nota, imagen, type, audio):     
     try:
+        #Abrimos la imagen para poder codificarla a binario
         with open(imagen,'rb') as imageFile:
+            #Creamos el JSON con los campos que contendra el archivo
             nota_simple = {
                 'name_invitado': name,
                 'email':email,
@@ -28,10 +34,15 @@ def safeData(name, email, nota, imagen, type, audio):
                 'path_img':imagen,
                 'bin_imagen' : base64.b64encode(imageFile.read())
             }
+        #Agregamos el objeto a la base de datos
         res = table_notas.insert_one(nota_simple)
+        #Retornamos el id del objeto agregado
         return res.inserted_id
     except:
+        #Retornamos False si ocurrio un problema en la codificacion de la imagen
         return False
+
+
 #Verificar si exite el invitado en usuarios conocidos
 def exitsInvitado(id):
     query = {'id_anterior':id}
@@ -77,10 +88,13 @@ def findImageId(id):
     with open(filename, 'wb') as f:
         #Escribimos que la imagen en la carpeta
         f.write(decoder_img)
+
+
 #Metodo para eliminar notas
 def deleteData(id):
     #Retonamos 1 si se elimino el elemento correctamente
     return table_notas.delete_one({'_id': ObjectId(id)}).deleted_count
+
 
 #Metodo encargado de ontener la informacion especifica de este usuario       
 def dataInvitado(id):
@@ -95,6 +109,7 @@ def dataInvitado(id):
         information.append(data['path_nota_voz'])
     #Retornamos los todos los datos almacenados anteriormente 
     return(information[:])
+
 
 #Metodo para obtener todos los registros del archivo Notas Simples y ser mostrados en la tabla del archivo logica administrador
 def findAllNote():

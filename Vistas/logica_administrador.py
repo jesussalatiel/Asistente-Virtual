@@ -45,7 +45,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     #Metodo encargado de obtener el id del campo seleccionado en la tabla       
     def tableItemChanged(self):
-         
         #Seleccionamos solo el id del elemento seleccionado
         id = self.tableWidget.selectedItems()
         self.close()
@@ -53,11 +52,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.next = verNota.secondWindows(id[0].text())
         
         
-"""
-Unificar audio y texto en la base de datos 
-"""  
+#Instanciamos la aplicacion para que podamos avanzar y atrazar en las ventanas
 def other():
+    #Instancia de la ventana
     return MainWindow()
+
 
 def startAdmin():
     app = QtWidgets.QApplication([])
