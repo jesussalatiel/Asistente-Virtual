@@ -8,6 +8,7 @@ import threading
 import pyaudio
 import wave
 import Vistas.database as db 
+import os
 
 class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -98,6 +99,7 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.RATE = 44100
         #self.RECORD_SECONDS = 10
         self.PATH = './CNN/database/Usuarios_Audios/'
+        os.makedirs(self.PATH, exist_ok=True)
         self.p = pyaudio.PyAudio()
         self.frames = []
         self.stream = self.p.open(format=self.FORMAT,

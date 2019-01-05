@@ -45,16 +45,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     #Metodo encargado de obtener el id del campo seleccionado en la tabla       
     def tableItemChanged(self):
-        try: 
-            #Seleccionamos solo el id del elemento seleccionado
-            id = self.tableWidget.selectedItems()
-            self.close()
-            #Pasamos el id de la nota que se desea ver a la segunda ventana llamada "Second" y hacemos visible la ventana de Nota
-            self.next = verNota.secondWindows(id[0].text())
-        except:
-            QMessageBox.warning(self, "Seleccion de registro",
-                                "No se selecciono ningun campo.")
-            self.show()
+         
+        #Seleccionamos solo el id del elemento seleccionado
+        id = self.tableWidget.selectedItems()
+        self.close()
+        #Pasamos el id de la nota que se desea ver a la segunda ventana llamada "Second" y hacemos visible la ventana de Nota
+        self.next = verNota.secondWindows(id[0].text())
+        
         
 """
 Unificar audio y texto en la base de datos 

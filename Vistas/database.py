@@ -32,38 +32,31 @@ def safeData(name, email, nota, imagen, type, audio):
         return res.inserted_id
     except:
         return False
-#Verificar si exite el elemento
+#Verificar si exite el invitado en usuarios conocidos
 def exitsInvitado(id):
-    query = {'_id':id}
+    query = {'id_anterior':id}
     veces = 0
     verify = invitado_conocido.find({}, query)
     for exist in verify:
-        if str(exist['_id']) in id:
-            veces +=1
-    print(veces)
-    return veces
+        if (exist['id_anterior']) in id:
+            veces += 1
+    if veces < 1:
+        return False
+        
+    return True
 
 #Metodo para guardar a Invitados
-def safeInvitado(name, imagen):
-    #Verificamos que el nombre de usario no se repita
-    query = {'name':name}
-    verify = invitado_conocido.find({},query)
-    veces = 0
-    for exist in verify:
-        if exist['name'] in name:
-            veces+=1
-    if veces >= 1:
-        return False
-    else:
-        with open(imagen, 'rb') as imageFile:
-            know = {
+def safeInvitado(name, imagen, id_anterior):
+    with open(imagen, 'rb') as imageFile:
+        know = {
                 'name': name,
-                'image': base64.b64encode(imageFile.read())
+                'image': base64.b64encode(imageFile.read()),
+                'id_anterior':id_anterior
             }
-        #Insertamos al usuario en la tabla Invitado Conocido
-        res = invitado_conocido.insert_one(know)
-        #Retornamos el id del usuario registrado
-        return True
+    #Insertamos al usuario en la tabla Invitado Conocido
+    res = invitado_conocido.insert_one(know)
+    #Retornamos el id del usuario registrado
+    return res.inserted_id
    
 
 #Metodo para buscar imagen por "id" en la base de datos        

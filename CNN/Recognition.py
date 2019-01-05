@@ -11,11 +11,12 @@ import tensorflow as tf
 import keras
 import cv2 
 from os import listdir
+import os
 import cv2, imutils, os, time, shutil, time
 #import Vistas.interfaz_admin as admin
-import Vistas.cliente as cliente
 import datetime
 import Vistas.logica_cliente as cli
+import Vistas.logica_administrador as admin
 #------------------------------------------------------------------------------------------
 #################Configuracion del CPU-GPU
 config = tf.ConfigProto( device_count = {'GPU': 1 , 'CPU': 56} )
@@ -33,6 +34,11 @@ size_height, size_width = 224, 224
 #Cargamos la bases de datos de imagenes
 #En esta ubicacion se alojan las imagenes que se quieren reconocer con extension jpg
 database_images = './CNN/database/Usuarios_Registrados/'
+#Verificamos que exista la ruta de la carpeta si no procedemos a crearla
+os.makedirs(database_images, exist_ok=True)
+database_usuarios_desconocios = './CNN/database/Usuarios_Desconocidos/'
+#Verificamos que exista la ruta de la carpeta si no procedemos a crearla
+os.makedirs(database_usuarios_desconocios, exist_ok=True)
 #Color de la linea que es mostrada en OpenCV
 color = (0,255,0)
 #Ruta de pesos https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view
@@ -194,10 +200,12 @@ while(exit):
             del list_access[:] 
             cv2.imwrite(database_images, img)
         #Comparamos la lista para crear un promedio de la cara detectada y permitir el acceso
-        if found== 1: 
+        if found == 1: 
             if len(list_access) > 5:
-               if (sum(list_access) // len(list_access)) > 95:  
-                   print('Desplegar panel de control') 
+               if (sum(list_access) // len(list_access)) > 95:
+                   del list_access[:]
+                   admin.startAdmin()
+                   
                    
         #Si no es detectada algun rostro aumentamos contador y volvemos a relizar el proceso para comprobar que en verdad no es usuario registrado 
         # y pueda ser tratado como invitado       
@@ -206,10 +214,9 @@ while(exit):
             print("{}. Desconocido".format(user))
             cv2.putText(img,'Invitado',((x+w-170), (y-10)), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
             if user == 10: 
-                database_images = './CNN/database/Usuarios_Desconocidos/{}.jpg'.format(name)
+                database_images = database_usuarios_desconocios+'{}.jpg'.format(name)
                 cv2.imwrite(database_images, detected_face)
                 user = 0
-                
                 cli.startCliente(database_images)
                 del list_access[:] 
                 

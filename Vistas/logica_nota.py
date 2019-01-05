@@ -4,6 +4,7 @@ import shutil
 import os
 from PyQt5.QtWidgets import QMessageBox
 import Vistas.logica_administrador
+import pyglet
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -41,21 +42,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.pushButton_3.setGeometry(0, 0, 0, 0)
             self.pushButton_3.setEnabled(False)
         
-        print(db.exitsInvitado(self._invitado))
+        if db.exitsInvitado(self._invitado):
+            self.pushButton.setGeometry(0, 0, 0, 0)
+            self.pushButton.setEnabled(False)
         
     #Metodo encargado de recordar al usuario        
     def recordar(self):
         name_invitado = str(db.dataInvitado(self._invitado)[0]).upper()        
-        if (db.safeInvitado(name_invitado, self.image)):
+        if len(db.safeInvitado(name_invitado, self.image, self._invitado)) > 4:
             QMessageBox.information(self, 'Alta de Invitado ',
                                     'Se reconocera al nuevo invitado por: {}'.format(name_invitado))
-        else:
-            QMessageBox.warning(self, "Usuario Existente",
-                                "Ya existe un usuario con el mismo nombre.")
-    
+           
     #Metodo para reproducir la nota de voz
     def play(self):
-        print("Reproducir nota")
+        path = str(db.dataInvitado(self._invitado)[4])
+        self.song = pyglet.media.load(path)
+        self.song.play()
+        
+
+    
 
     #Metodo encargado de eliminar las notas 
     def delete(self):

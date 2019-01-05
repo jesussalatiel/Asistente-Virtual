@@ -16,3 +16,4 @@ imutils
 django
 djongo
 requests 
+pyglet
