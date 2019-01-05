@@ -3,6 +3,7 @@ import Vistas.database as db
 import shutil
 import os
 from PyQt5.QtWidgets import QMessageBox
+import Vistas.logica_administrador
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -31,7 +32,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "<html><head/><body><p><img src={}></p></body></html>".format(self.image))
         # Datos basicos del usuario
         self.label_2.setText('Nombre: {}'.format(data_invitado[0]))
-        self.setWindowTitle('Visita de {}'.format(data_invitado[0]))
+        self.setWindowTitle('Notificacion de {}'.format(data_invitado[0]))
         self.label_3.setText('Visito: {}'.format(data_invitado[3]))
         self.label_4.setText('Email: {}'.format(data_invitado[1]))
         self.textEdit.setText(data_invitado[2])
@@ -40,32 +41,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.pushButton_3.setGeometry(0, 0, 0, 0)
             self.pushButton_3.setEnabled(False)
         
+        print(db.exitsInvitado(self._invitado))
+        
     #Metodo encargado de recordar al usuario        
     def recordar(self):
-        name_invitado = str(db.dataInvitado(self._invitado)[0]).upper()
-        #Renombramos a la imagen y movemos a la carpeta de usuarios registrados
-        img_new = './CNN/database/Usuarios_Registrados/{}.jpg'.format(name_invitado)
-        
+        name_invitado = str(db.dataInvitado(self._invitado)[0]).upper()        
         if (db.safeInvitado(name_invitado, self.image)):
             QMessageBox.information(self, 'Alta de Invitado ',
                                     'Se reconocera al nuevo invitado por: {}'.format(name_invitado))
         else:
             QMessageBox.warning(self, "Usuario Existente",
                                 "Ya existe un usuario con el mismo nombre.")
-        """
-        if len(str(db.safeInvitado(name_invitado, self.image))) > 4:
-            
-        #os.rename(self.image, img_new)
-        """ 
-
+    
+    #Metodo para reproducir la nota de voz
     def play(self):
         print("Reproducir nota")
 
     #Metodo encargado de eliminar las notas 
     def delete(self):
-        if (db.deleteData(self._invitado)) == 1:
-            print('Eliminado Exitosamente')    
-        self.close()
+        buttonReply = QMessageBox.warning(self, 'Eliminacion de Registro', "Esta seguro de eliminar el registro", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if buttonReply == QMessageBox.Yes:
+            if (db.deleteData(self._invitado)) == 1:
+                QMessageBox.information(self, 'Eliminacion de Recordatorio ',
+                                    'Eliminacion Exitosa')
+            self.next = Vistas.logica_administrador.other()
+            self.close()
+            
 
     #Control del evento cerrar que es mostrado en la ventana
     def closeEvent(self, event):
@@ -77,6 +78,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Eliminamos la carpeta temporal
         shutil.rmtree(self.path)
         self.close()
+        self.next = Vistas.logica_administrador.other()
     
     # Metodo encargado de buscar la imagen
     def idInvitado(self, id):

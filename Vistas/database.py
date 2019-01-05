@@ -32,6 +32,16 @@ def safeData(name, email, nota, imagen, type, audio):
         return res.inserted_id
     except:
         return False
+#Verificar si exite el elemento
+def exitsInvitado(id):
+    query = {'_id':id}
+    veces = 0
+    verify = invitado_conocido.find({}, query)
+    for exist in verify:
+        if str(exist['_id']) in id:
+            veces +=1
+    print(veces)
+    return veces
 
 #Metodo para guardar a Invitados
 def safeInvitado(name, imagen):

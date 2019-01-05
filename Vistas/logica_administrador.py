@@ -2,13 +2,17 @@ from Vistas.vista_administrador import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import Vistas.database as db
 import Vistas.logica_nota as verNota
+from PyQt5.QtWidgets import QMessageBox
+
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def __init__(self):
-        QtWidgets.QMainWindow.__init__(self)
+        #QtWidgets.QMainWindow.__init__(self)
+        super().__init__()
         #Cargamos los componentes correpondientes de la vista administrador
         self.setupUi(self)
+        self.show()
         #Creamos el formato de la tabla
         self.formatTable()
         #Evento del boton ver
@@ -44,15 +48,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         try: 
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
-            #self.close()
+            self.close()
             #Pasamos el id de la nota que se desea ver a la segunda ventana llamada "Second" y hacemos visible la ventana de Nota
             self.next = verNota.secondWindows(id[0].text())
         except:
-            print('No hay elemento seleccionado')                        
+            QMessageBox.warning(self, "Seleccion de registro",
+                                "No se selecciono ningun campo.")
+            self.show()
         
 """
 Unificar audio y texto en la base de datos 
 """  
+def other():
+    return MainWindow()
 
 def startAdmin():
     app = QtWidgets.QApplication([])
