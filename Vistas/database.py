@@ -78,10 +78,13 @@ def exitsInvitado(id):
 
 #Metodo para guardar a Invitados
 def safeInvitado(name, imagen, id_anterior):
-    #Guardamos la imagen en escala de grises para el fucninamiento de la red neuronal
+    #Leemos la imagen para ser convertida a escala de grises
     image = cv2.imread(imagen)
+    #Guardamos la imagen en escala de grises para el fucninamiento de la red neuronal
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    #Escribimos la imagen a escala de grises en su misma ruta y con el mismo nombre
     cv2.imwrite(imagen, gray)
+    #Procedemos a convertir la imagen a binario para almacenarlo en la base de datos
     with open(imagen, 'rb') as imageFile:
         know = {
                 'name': name,
