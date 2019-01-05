@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'administrador.ui'
+# Form implementation generated from reading ui file 'conocidos.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -73,9 +73,9 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "NOMBRE"))
+        item.setText(_translate("MainWindow", "New Column"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "EMAIL"))
+        item.setText(_translate("MainWindow", "NOMBRE"))
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "TIPO"))
         item = self.tableWidget.horizontalHeaderItem(4)
