@@ -3,6 +3,8 @@ import base64
 import datetime
 from bson.objectid import ObjectId
 import os
+import cv2
+
 
 ################### Parametros Genrales de BD ######################################
 ####################################################################################
@@ -42,6 +44,24 @@ def safeData(name, email, nota, imagen, type, audio):
         #Retornamos False si ocurrio un problema en la codificacion de la imagen
         return False
 
+#Decodificamos todos los usuarios conocidos
+def decodeKnown():
+    #Establecemos los usuarios en la base de datos de la red neuronal
+    path = './CNN/database/Usuarios_Registrados/'
+    #Verificamos que exista la carpeta si no la creamos
+    os.makedirs(path, exist_ok=True)
+    #Hacemos una consulta a la base de datos para ver quienes son los usuarios registrados
+    for known in invitado_conocido.find():        
+        #Creamos el path de la imagen con su respectivo nombre
+        path_image= (path+known['name']+'.jpg')
+        
+        #Abrimos memoria para que pueda escribir la imagen en el path seleccionada
+        with open(path_image, 'wb') as f:
+            #Escribimos la imagen decodificada en el path establecido
+            img = base64.b64decode(known['image'])
+            f.write(img)
+            
+            
 
 #Verificar si exite el invitado en usuarios conocidos
 def exitsInvitado(id):
@@ -58,6 +78,10 @@ def exitsInvitado(id):
 
 #Metodo para guardar a Invitados
 def safeInvitado(name, imagen, id_anterior):
+    #Guardamos la imagen en escala de grises para el fucninamiento de la red neuronal
+    image = cv2.imread(imagen)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite(imagen, gray)
     with open(imagen, 'rb') as imageFile:
         know = {
                 'name': name,
@@ -67,7 +91,7 @@ def safeInvitado(name, imagen, id_anterior):
     #Insertamos al usuario en la tabla Invitado Conocido
     res = invitado_conocido.insert_one(know)
     #Retornamos el id del usuario registrado
-    return res.inserted_id
+    return str(res.inserted_id)
    
 
 #Metodo para buscar imagen por "id" en la base de datos        
