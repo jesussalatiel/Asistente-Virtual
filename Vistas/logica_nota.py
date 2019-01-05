@@ -1,7 +1,8 @@
 from Vistas.vista_nota import *
 import Vistas.database as db
 import shutil
-
+import os
+from PyQt5.QtWidgets import QMessageBox
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -11,7 +12,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.show()
         self.buildNota()
-        self.pushButton.clicked.connect(self.notificar)
+        self.pushButton.clicked.connect(self.recordar)
         self.pushButton_2.clicked.connect(self.delete)
         self.pushButton_3.clicked.connect(self.play)
 
@@ -39,9 +40,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.pushButton_3.setGeometry(0, 0, 0, 0)
             self.pushButton_3.setEnabled(False)
         
+    #Metodo encargado de recordar al usuario        
+    def recordar(self):
+        name_invitado = str(db.dataInvitado(self._invitado)[0]).upper()
+        #Renombramos a la imagen y movemos a la carpeta de usuarios registrados
+        img_new = './CNN/database/Usuarios_Registrados/{}.jpg'.format(name_invitado)
+        
+        if (db.safeInvitado(name_invitado, self.image)):
+            QMessageBox.information(self, 'Alta de Invitado ',
+                                    'Se reconocera al nuevo invitado por: {}'.format(name_invitado))
+        else:
+            QMessageBox.warning(self, "Usuario Existente",
+                                "Ya existe un usuario con el mismo nombre.")
+        """
+        if len(str(db.safeInvitado(name_invitado, self.image))) > 4:
             
-    def notificar(self):
-        print("Notificar")
+        #os.rename(self.image, img_new)
+        """ 
 
     def play(self):
         print("Reproducir nota")

@@ -10,8 +10,11 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 database = myclient['asistente']
 #Seleccion de la tabla o archivo donde seran almacenados los registros
 table_notas = database['Notas']
+invitado_conocido = database['Conocidos']
+root = database['Administradores']
 
 def safeData(name, email, nota, imagen, type, audio):
+        
     try:
         with open(imagen,'rb') as imageFile:
             nota_simple = {
@@ -29,6 +32,29 @@ def safeData(name, email, nota, imagen, type, audio):
         return res.inserted_id
     except:
         return False
+
+#Metodo para guardar a Invitados
+def safeInvitado(name, imagen):
+    #Verificamos que el nombre de usario no se repita
+    query = {'name':name}
+    verify = invitado_conocido.find({},query)
+    veces = 0
+    for exist in verify:
+        if exist['name'] in name:
+            veces+=1
+    if veces >= 1:
+        return False
+    else:
+        with open(imagen, 'rb') as imageFile:
+            know = {
+                'name': name,
+                'image': base64.b64encode(imageFile.read())
+            }
+        #Insertamos al usuario en la tabla Invitado Conocido
+        res = invitado_conocido.insert_one(know)
+        #Retornamos el id del usuario registrado
+        return True
+   
 
 #Metodo para buscar imagen por "id" en la base de datos        
 def findImageId(id):
