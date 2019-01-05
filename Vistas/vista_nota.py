@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(90, 20, 211, 271))
         self.label.setObjectName("label")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(160, 490, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(90, 490, 75, 23))
         self.pushButton.setObjectName("pushButton")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(90, 290, 211, 16))
@@ -49,6 +49,12 @@ class Ui_MainWindow(object):
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(160, 20, 101, 16))
         self.label_6.setObjectName("label_6")
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(200, 490, 75, 23))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(310, 390, 61, 61))
+        self.pushButton_3.setObjectName("pushButton_3")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -61,12 +67,14 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/newPrefix/454750.jpg\"/></p></body></html>"))
-        self.pushButton.setText(_translate("MainWindow", "Algo"))
+        self.pushButton.setText(_translate("MainWindow", "Recordar"))
         self.label_2.setText(_translate("MainWindow", "Nombre"))
         self.label_3.setText(_translate("MainWindow", "<html><head/><body><p>Fecha</p><p><br/></p></body></html>"))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p>Email<br/></p></body></html>"))
         self.label_5.setText(_translate("MainWindow", "<html><head/><body><p>Mensaje</p></body></html>"))
         self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Foto del Invitado</p><p><br/></p></body></html>"))
+        self.pushButton_2.setText(_translate("MainWindow", "Eliminar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Voz"))
 
 
 if __name__ == "__main__":

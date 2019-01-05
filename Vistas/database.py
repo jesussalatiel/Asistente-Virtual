@@ -68,6 +68,10 @@ def findImageId(id):
     with open(filename, 'wb') as f:
         #Escribimos que la imagen en la carpeta
         f.write(decoder_img)
+#Metodo para eliminar notas
+def deleteData(id):
+    #Retonamos 1 si se elimino el elemento correctamente
+    return tabla_notas.delete_one({'_id': ObjectId(id)}).deleted_count
 
 #Metodo encargado de ontener la informacion especifica de este usuario       
 def dataInvitado(id):

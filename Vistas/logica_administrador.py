@@ -15,6 +15,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.tableItemChanged)
 
     def formatTable(self):
+        #Titulo de la ventana
+        self.setWindowTitle("Ventana de Administrador")
         #Especificamos columnas y filas que tendra la tabla
         columnas = 8
         #Bloqueamos la fila para que no pueda ser editada por el usuario
@@ -38,14 +40,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         db.closeConection()
         
     #Metodo encargado de obtener el id del campo seleccionado en la tabla       
-    def tableItemChanged(self): 
-        #Seleccionamos solo el id del elemento seleccionado
-        id = self.tableWidget.selectedItems()
-        #self.close()
-        #Pasamos el id de la nota que se desea ver a la segunda ventana llamada "Second" y hacemos visible la ventana de Nota
-        self.next = verNota.Second(id[0].text())
-                            
-        
+    def tableItemChanged(self):
+        try: 
+            #Seleccionamos solo el id del elemento seleccionado
+            id = self.tableWidget.selectedItems()
+            #self.close()
+            #Pasamos el id de la nota que se desea ver a la segunda ventana llamada "Second" y hacemos visible la ventana de Nota
+            self.next = verNota.secondWindows(id[0].text())
+        except:
+            print('No hay elemento seleccionado')                        
         
 """
 Unificar audio y texto en la base de datos 
