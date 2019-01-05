@@ -44,37 +44,22 @@ def safeData(name, email, nota, imagen, type, audio):
         #Retornamos False si ocurrio un problema en la codificacion de la imagen
         return False
 
-#Decodificamos todos los usuarios conocidos
-def decodeKnown():
-    #Establecemos los usuarios en la base de datos de la red neuronal
-    path = './CNN/database/Usuarios_Registrados/'
-    #Verificamos que exista la carpeta si no la creamos
-    os.makedirs(path, exist_ok=True)
-    #Hacemos una consulta a la base de datos para ver quienes son los usuarios registrados
-    for known in invitado_conocido.find():        
-        #Creamos el path de la imagen con su respectivo nombre
-        path_image= (path+known['name']+'.jpg')
-        
-        #Abrimos memoria para que pueda escribir la imagen en el path seleccionada
-        with open(path_image, 'wb') as f:
-            #Escribimos la imagen decodificada en el path establecido
-            img = base64.b64decode(known['image'])
-            f.write(img)
-            
-            
-
-#Verificar si exite el invitado en usuarios conocidos
-def exitsInvitado(id):
-    query = {'id_anterior':id}
-    veces = 0
-    verify = invitado_conocido.find({}, query)
-    for exist in verify:
-        if (exist['id_anterior']) in id:
-            veces += 1
-    if veces < 1:
-        return False
-        
-    return True
+#Metodo encargado de guardar todos los administradores del sistema
+def saveAdministrator(id_invitado):
+    #Realizamos un recorrido en la base para obtener los parametros respectivos del ID del invitado para ser almacenados en administradores
+    for invitado in invitado_conocido.find({}, {'_id': ObjectId(id_invitado), 'name': 1, 'image': 1}):
+        #Creamos el JSON de insercion de datos que seran guardados en la base 
+        query = {
+            'name': invitado['name'],
+            'image': invitado['image']
+        }
+        #Realizamos el registro
+        res = root.insert_one(query)
+        if len(str(res.inserted_id)) >= 4:
+            #Enviamos True si todo salio bien
+            return True if (invitado_conocido.delete_one({'_id': ObjectId(id_invitado)}).deleted_count) == 1 else False
+    #Retornamos Falso si no se ingreso el registro
+    return False
 
 #Metodo para guardar a Invitados
 def safeInvitado(name, imagen, id_anterior):
@@ -87,15 +72,47 @@ def safeInvitado(name, imagen, id_anterior):
     #Procedemos a convertir la imagen a binario para almacenarlo en la base de datos
     with open(imagen, 'rb') as imageFile:
         know = {
-                'name': name,
-                'image': base64.b64encode(imageFile.read()),
-                'id_anterior':id_anterior
-            }
+            'name': name,
+            'image': base64.b64encode(imageFile.read()),
+            'id_anterior': id_anterior
+        }
     #Insertamos al usuario en la tabla Invitado Conocido
     res = invitado_conocido.insert_one(know)
     #Retornamos el id del usuario registrado
     return str(res.inserted_id)
-   
+
+#Decodificamos todos los usuarios conocidos
+def decodeKnown():
+    #Establecemos los usuarios en la base de datos de la red neuronal
+    path = './CNN/database/Usuarios_Registrados/'
+    #Verificamos que exista la carpeta si no la creamos
+    os.makedirs(path, exist_ok=True)
+    #Hacemos una consulta a la base de datos para ver quienes son los usuarios registrados
+    for known in invitado_conocido.find():        
+        #Creamos el path de la imagen con su respectivo nombre
+        path_image= (path+known['name']+'.jpg')
+        #Abrimos memoria para que pueda escribir la imagen en el path seleccionada
+        with open(path_image, 'wb') as f:
+            #Escribimos la imagen decodificada en el path establecido
+            img = base64.b64decode(known['image'])
+            f.write(img)
+            
+#Metodo para obtener todos los datos del usuario conocido
+def dataKnown(): 
+    return invitado_conocido.find().sort('name')
+
+#Verificar si exite el invitado en usuarios conocidos
+def exitsInvitado(id):
+    query = {'id_anterior':id}
+    veces = 0
+    verify = invitado_conocido.find({}, query)
+    for exist in verify:
+        if (exist['id_anterior']) in id:
+            veces += 1
+    if veces < 1:
+        return False
+        
+    return True  
 
 #Metodo para buscar imagen por "id" en la base de datos        
 def findImageId(id):
