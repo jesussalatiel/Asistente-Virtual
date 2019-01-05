@@ -30,20 +30,18 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
           if (re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$', email.lower())):
                if (self.start_speak == True): 
-                    print(db.saveAudio(name, email, note, self.PATH+name+'_'+((str(self.image.split('/')[4]).split('.')[0])+'.mp3'), self.image))
+                    print(db.safeData(name, email, note, self.image, 'Audio', self.PATH +
+                                      name+'_'+((str(self.image.split('/')[4]).split('.')[0])+'.mp3')))
                     self.saveAudio(str((self.image.split('/')[4]).split('.')[0]))
                     QMessageBox.information(self, 'Notificacion de Mensaje  ',"El mensaje de voz se ha notificado con exito")
                     self.cancel()
                     
-               elif (len(note) > 1):
-                    
-                    print(db.saveNota(name, email, note, self.image))
+               elif (len(note) > 1):                    
+                    print(db.safeData(name, email, note, self.image, 'Text', None))
                     QMessageBox.information(self, 'Notificacion de Mensaje  ',"El mensaje se ha notificado con exito")
                     self.cancel()
-
                elif(len(note)<=0) and self.start_speak == False:
                     QMessageBox.warning(self, "Notificación de Mensaje", "Faltan campos por rellenar.")
-              
           else:
                QMessageBox.warning(self, "Correo Invalido", "Correo Electronico Invalido")
         

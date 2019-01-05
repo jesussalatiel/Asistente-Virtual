@@ -1,3 +1,4 @@
 #Ignore folder named 'Assets'
 CNN/Assets/
 CNN/Assets/vgg_face_weights.h5
+CNN/database/
