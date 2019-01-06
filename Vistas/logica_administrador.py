@@ -5,7 +5,8 @@ import Vistas.logica_nota as verNota
 from PyQt5.QtWidgets import QMessageBox
 import Vistas.logica_administracion as administracion
 import Vistas.logica_conocidos as conocidos
-
+import Vistas.database as db
+import Vistas.logica_send_email as email
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
@@ -21,6 +22,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.tableItemChanged)
         self.pushButton_2.clicked.connect(self.known)
         self.pushButton_3.clicked.connect(self.administration)
+        self.pushButton_4.clicked.connect(self.sendEmail)
+        self.pushButton_5.clicked.connect(self.deleteRegister)
 
     def formatTable(self):
         #Titulo de la ventana
@@ -30,6 +33,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_2.setText('Ver Conocidos')
         self.pushButton_3.setText('Administracion')
         self.pushButton_4.setText('Responder')
+        self.pushButton_5.setText('Eliminar')
         #Especificamos columnas y filas que tendra la tabla
         columnas = 8
         #Bloqueamos la fila para que no pueda ser editada por el usuario
@@ -67,6 +71,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             #Mandamos un mensaje de error
             QMessageBox.warning(self, "Notificacion de error",
                                  "Ningun campo seleccionado")
+    def getID(self):
+        try:
+            id = self.tableWidget.selectedItems()
+            return(id[0].text())
+        except :
+            #Lanzamos excepcion en caso de que el usuario no seleccione ningun elemento de la tabla
+            #Abrimos de nuevo la ventana
+            self.show()
+            #Mandamos un mensaje de error
+            QMessageBox.warning(self, "Notificacion de error",
+                                "Ningun campo seleccionado")
+    def deleteRegister(self):
+        id = self.getID()
+        if (id) == None:
+            print('Hola')
+        else:
+            buttonReply = QMessageBox.warning(
+                self, 'Eliminacion de Registro', "Esta seguro de eliminar el registro", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if buttonReply == QMessageBox.Yes:
+                if (db.deleteData(id)) == 1:
+                    QMessageBox.information(self, 'Eliminacion de Recordatorio ',
+                                            'Eliminacion Exitosa')
+            self.formatTable()
+
+    def sendEmail(self):
+        id = self.getID()
+        if (id) == None:
+            print('Hola')
+        else:
+            self.next = email.windowsEmail(id)
 
     def known(self):
         self.next = conocidos.known()

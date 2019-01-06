@@ -20,6 +20,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     #Construimos la ventana principal de la ventana modificacion
     def buildWindows(self):
         self.setWindowTitle('Modificacion de Usuario')
+        self.label.setText('Nombre: ')
+        self.label_2.setText('Email: ')
         data = db.dataKnownId(self._id_invitado)
         self.lineEdit.setText(data['name'])
         self.lineEdit_2.setText(data['email']) 

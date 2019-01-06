@@ -57,10 +57,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
            
     #Metodo para reproducir la nota de voz
     def play(self):
-        path = str(db.dataInvitado(self._invitado)[5])
-        self.song = pyglet.media.load(path)
-        self.song.play()          
-
+        try:
+            path = str(db.dataInvitado(self._invitado)[5])
+            self.song = pyglet.media.load(path)
+            self.song.play()          
+        except:
+            QMessageBox.information(self, 'No existe audio ',
+                                    'No hay audio en la ruta especificada')
     #Metodo encargado de eliminar las notas 
     def delete(self):
         buttonReply = QMessageBox.warning(self, 'Eliminacion de Registro', "Esta seguro de eliminar el registro", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
