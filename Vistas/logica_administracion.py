@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_4.setText('4')
         
         #Especificamos columnas y filas que tendra la tabla
-        columnas = 4
+        columnas = 5
         #Bloqueamos la fila para que no pueda ser editada por el usuario
         self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         #Metodos para seleccionar la fila completa
@@ -38,13 +38,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Iniciamos filas en 0
         self.tableWidget.setRowCount(0)
         #Iteramos en los datos para mostrar los registros de cada columna
-        for i, data in enumerate(db.findAllNote()):
+
+        for i, data in enumerate(db.dataRootAll()):
             #Aumentamos las filas segun la cantidad de registros
             self.tableWidget.insertRow(i)
             #Imprimimos los datos de cada columna
-            for x in range(columnas):
-                self.tableWidget.setItem(
-                    i, x, QtWidgets.QTableWidgetItem(str(data[db.keysList()[x]])))
+            self.tableWidget.setItem(
+                i, 0, QtWidgets.QTableWidgetItem(str(data['_id'])))
+            self.tableWidget.setItem(
+                i, 1, QtWidgets.QTableWidgetItem(str(data['name'])))
+            self.tableWidget.setItem(
+                i, 2, QtWidgets.QTableWidgetItem(str(data['email'])))
+            self.tableWidget.setItem(
+                i, 3, QtWidgets.QTableWidgetItem(str(data['id_anterior'])))
         #Cerramos la conexion a la base de datos
         db.closeConection()
 

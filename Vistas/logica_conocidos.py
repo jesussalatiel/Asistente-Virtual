@@ -54,17 +54,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
-    #Metodo encargado de convertir de usuario normal a invitado
+    #Metodo encargado de convertir de usuario normal a administrador
     def convertToAdmin(self):
         try:
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
-            seleccion = db.saveAdministrator(id[0].text())
+            seleccion = id[0].text()
             #Preguntamos si realmente quiere convertir el usuario en administrados
             buttonReply = QMessageBox.warning(self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if buttonReply == QMessageBox.Yes:
                 #Aseguramos que la operacion se realice con exito
-                if seleccion == True:
+                if db.saveAdministrator(seleccion) == True:
                     QMessageBox.information(self, 'Convertir en Administrador ',
                                             'Operacion realizada con exito.')
                     #Actualizamos la tabla

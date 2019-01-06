@@ -47,11 +47,13 @@ def safeData(name, email, nota, imagen, type, audio):
 #Metodo encargado de guardar todos los administradores del sistema
 def saveAdministrator(id_invitado):
     #Realizamos un recorrido en la base para obtener los parametros respectivos del ID del invitado para ser almacenados en administradores
-    for invitado in invitado_conocido.find({}, {'_id': ObjectId(id_invitado), 'name': 1, 'image': 1}):
+    for invitado in invitado_conocido.find({}, {'_id': ObjectId(id_invitado), 'name': 1, 'image': 1, 'email':1, 'id_anterior': 1}):
         #Creamos el JSON de insercion de datos que seran guardados en la base 
         query = {
             'name': invitado['name'],
-            'image': invitado['image']
+            'image': invitado['image'],
+            'email': invitado['email'],
+            'id_anterior': invitado['id_anterior']
         }
         #Realizamos el registro
         res = root.insert_one(query)
@@ -60,6 +62,7 @@ def saveAdministrator(id_invitado):
             return True if (invitado_conocido.delete_one({'_id': ObjectId(id_invitado)}).deleted_count) == 1 else False
     #Retornamos Falso si no se ingreso el registro
     return False
+    
 
 #Eliminamos a conocidos
 def deleteKnown(id_invitado):
@@ -111,7 +114,7 @@ def dataKnownId(id_invitado):
         return data
 
 def dataRootAll():
-    return root.find()
+    return root.find().sort('name')
     
 def updateUserId(id_invitado, name, email):
     modify = {
