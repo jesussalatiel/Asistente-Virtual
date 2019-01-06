@@ -31,15 +31,21 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
           if (re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$', email.lower())):
                if (self.start_speak == True): 
-                    print(db.safeData(name, email, note, self.image, 'Audio', self.PATH +
-                                      name+'_'+((str(self.image.split('/')[4]).split('.')[0])+'.mp3')))
+                    recibo = str(db.safeData(name, email, note, self.image, 'Audio', self.PATH +
+                                             name+'_'+((str(self.image.split('/')[4]).split('.')[0])+'.mp3')))
                     self.saveAudio(str((self.image.split('/')[4]).split('.')[0]))
-                    QMessageBox.information(self, 'Notificacion de Mensaje  ',"El mensaje de voz se ha notificado con exito")
+                    #Notificamos que el mensaje se guardo con exito
+                    QMessageBox.information(
+                        self, 'Notificacion de Mensaje  ', "El mensaje de voz se ha notificado con exito\nNumero de registro: {}\nMuchas Gracias!".format(recibo))
+                    #Quitamos la pantalla de dejar mensaje, aveces por este comando Truena el programa debido a un bug del codigo de Qt
+                    #self.statusBar().showMessage('Audio Guardado.')  
+                    print('Audio Guardado') 
                     self.cancel()
-                    
+               #Verificamos que el campo donde escriba el usuario tenga al menos 2 letras para notificar que es mensaje     
                elif (len(note) > 1):                    
-                    print(db.safeData(name, email, note, self.image, 'Text', None))
-                    QMessageBox.information(self, 'Notificacion de Mensaje  ',"El mensaje se ha notificado con exito")
+                    recibo =(db.safeData(name, email, note, self.image, 'Text', None))
+                    QMessageBox.information(
+                        self, 'Notificacion de Mensaje  ', "El mensaje se ha notificado con exito\nNumero de registro: {}\nMuchas Gracias!".format(recibo))
                     self.cancel()
                elif(len(note)<=0) and self.start_speak == False:
                     QMessageBox.warning(self, "Notificación de Mensaje", "Faltan campos por rellenar.")
@@ -52,8 +58,10 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
             if key == keyboard.Key.f1:
                self.i+=1
                self.start_speak = True
-               #self.statusBar().showMessage('Grabando Mensaje de Voz.')
-               print('Frame: {}, status: {}'.format(self.i, self.start_speak))
+               #Notificamos que esta grabando un audio, aveces por este comando truena el programa debido a un bug del mismo QT
+               #self.statusBar().showMessage('Grabando Audio.')
+               print('Grabando Audio')
+               #print('Frame: {}, status: {}'.format(self.i, self.start_speak))
                data = self.stream.read(self.CHUNK)
                self.frames.append(data)  
         except AttributeError:
@@ -80,7 +88,7 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
           with keyboard.Listener(on_press=self.on_press,  on_release=self.on_release) as self.listener:
                self.listener.join()       
         except:
-             print('Audio guardado.')
+             print()
 
    def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
@@ -110,6 +118,7 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
         
         #Titulo de la ventana
         self.setWindowTitle("Bienvenido desea dejar su mensaje")
+        self.textEdit.setPlaceholderText('Escriba su mensajes ó \nMantenga presionado f1 para grabar audio')
         ####Hilos para escuchar el evento de teclado
         hilo2 = threading.Thread(target = self.escuchar)
         self.i=0

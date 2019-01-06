@@ -1,10 +1,23 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'notificar.ui'
+#
+# Created by: PyQt5 UI code generator 5.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(533, 519)
+        MainWindow.resize(533, 516)
+        MainWindow.setMaximumSize(QtCore.QSize(533, 516))
+        MainWindow.setMouseTracking(True)
         MainWindow.setStyleSheet("")
+        MainWindow.setAnimated(True)
+        MainWindow.setTabShape(QtWidgets.QTabWidget.Triangular)
+        MainWindow.setDockNestingEnabled(False)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
@@ -15,20 +28,12 @@ class Ui_MainWindow(object):
         self.pushButton_2.setGeometry(QtCore.QRect(180, 420, 151, 50))
         self.pushButton_2.setIconSize(QtCore.QSize(50, 50))
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(460, 410, 51, 51))
-        self.pushButton_3.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./Vistas/Images/microfone_active.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_3.setIcon(icon)
-        self.pushButton_3.setIconSize(QtCore.QSize(40, 50))
-        self.pushButton_3.setObjectName("pushButton_3")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_2.setGeometry(QtCore.QRect(20, 40, 221, 31))
         self.lineEdit_2.setClearButtonEnabled(True)
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(100, 370, 61, 16))
+        self.label.setGeometry(QtCore.QRect(100, 370, 85, 16))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -47,7 +52,7 @@ class Ui_MainWindow(object):
         self.textEdit.setTabChangesFocus(True)
         self.textEdit.setObjectName("textEdit")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(20, 100, 200, 16))
+        self.label_3.setGeometry(QtCore.QRect(40, 100, 200, 16))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -103,12 +108,12 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Guardar"))
         self.pushButton_2.setText(_translate("MainWindow", "Cancelar"))
-        self.lineEdit_2.setPlaceholderText(_translate("MainWindow", "Ingrese su nombre"))
-        self.label.setText(_translate("MainWindow", "Invitado"))
+        self.lineEdit_2.setPlaceholderText(_translate("MainWindow", "                  Ingrese su nombre"))
+        self.label.setText(_translate("MainWindow", "Bienvenido !"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/cct/Salatiel.jpg\"/></p></body></html>"))
-        self.textEdit.setPlaceholderText(_translate("MainWindow", "Escriba su mensaje\nPresione F1 para iniciar la grabacion"))
+        self.textEdit.setPlaceholderText(_translate("MainWindow", "Escriba su mensaje"))
         self.label_3.setText(_translate("MainWindow", "Fecha:"))
-        self.lineEdit_3.setPlaceholderText(_translate("MainWindow", "Ingrese su email"))
+        self.lineEdit_3.setPlaceholderText(_translate("MainWindow", "                  Ingrese su email"))
         self.label_4.setText(_translate("MainWindow", "Nombre"))
         self.label_5.setText(_translate("MainWindow", "Correo Electronico"))
         self.label_6.setText(_translate("MainWindow", "Mensaje"))

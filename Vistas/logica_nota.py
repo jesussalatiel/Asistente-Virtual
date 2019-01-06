@@ -57,12 +57,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
            
     #Metodo para reproducir la nota de voz
     def play(self):
-        path = str(db.dataInvitado(self._invitado)[4])
+        path = str(db.dataInvitado(self._invitado)[5])
         self.song = pyglet.media.load(path)
-        self.song.play()
-        
-
-    
+        self.song.play()          
 
     #Metodo encargado de eliminar las notas 
     def delete(self):

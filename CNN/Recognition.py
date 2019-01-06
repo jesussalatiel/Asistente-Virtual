@@ -189,8 +189,6 @@ while(exit):
                             cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
                 #Dibujamos el nombre de la persona conocida
                 for known in db.dataKnown():
-                    print('ID --->'+str(known['_id']))
-                    print('Name -->'+str(image_name))
                     if str(known['_id']) == image_name:
                         know+=1
                         name_known = known['name']
@@ -249,7 +247,7 @@ while(exit):
 
         #Metodo encargado de reconocer las veces que un usuario conocido quiere dejan un mensaje
         #Esta ventana ya es ma personalizada
-        if know == 10:
+        if know == 5:
             know = 0
             print('Estas mucho tiempo: '+name_known)
             name_known = ''
