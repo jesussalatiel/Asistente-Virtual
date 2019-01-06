@@ -107,7 +107,9 @@ class Windows(QtWidgets.QMainWindow, Ui_MainWindow):
                     rate=self.RATE,
                     input=True,
                     frames_per_buffer=self.CHUNK)
-
+        
+        #Titulo de la ventana
+        self.setWindowTitle("Bienvenido desea dejar su mensaje")
         ####Hilos para escuchar el evento de teclado
         hilo2 = threading.Thread(target = self.escuchar)
         self.i=0

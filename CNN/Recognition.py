@@ -11,7 +11,6 @@ import tensorflow as tf
 import keras
 import cv2 
 from os import listdir
-import os
 import cv2, imutils, os, time, shutil, time
 #import Vistas.interfaz_admin as admin
 import datetime
@@ -190,13 +189,15 @@ while(exit):
                             cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
                 #Dibujamos el nombre de la persona conocida
                 for known in db.dataKnown():
+                    print('ID --->'+str(known['_id']))
+                    print('Name -->'+str(image_name))
                     if str(known['_id']) == image_name:
                         know+=1
                         name_known = known['name']
                         cv2.putText(img, name_known, (int(x+w-130), int(y-50)),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
 
-                #Dibujamos el nombre de los administradore
+                #Dibujamos el nombre de los administradores
                 for root in db.dataRoot():
                     if str(root['_id']) == image_name:
                         cv2.putText(img, root['name'], (int(x+w-130), int(y-50)),
@@ -247,7 +248,8 @@ while(exit):
                 del list_access[:] 
 
         #Metodo encargado de reconocer las veces que un usuario conocido quiere dejan un mensaje
-        if know == 2:
+        #Esta ventana ya es ma personalizada
+        if know == 10:
             know = 0
             print('Estas mucho tiempo: '+name_known)
             name_known = ''
@@ -258,6 +260,7 @@ while(exit):
     #Si es presionado la tecla 'q' sales del programa
     if cv2.waitKey(1) & 0xFF == ord('q'): 
      #if exit === 'q':
+       shutil.rmtree('./CNN/database/Usuarios_Registrados/')
        break
 
 #Liberar Memoria
