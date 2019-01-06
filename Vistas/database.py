@@ -61,6 +61,10 @@ def saveAdministrator(id_invitado):
     #Retornamos Falso si no se ingreso el registro
     return False
 
+#Eliminamos a conocidos
+def deleteKnown(id_invitado):
+    return True if (invitado_conocido.delete_one({'_id': ObjectId(id_invitado)}).deleted_count) == 1 else False
+
 #Metodo para guardar a Invitados
 def safeInvitado(name, imagen, id_anterior):
     #Leemos la imagen para ser convertida a escala de grises

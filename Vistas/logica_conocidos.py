@@ -2,6 +2,7 @@ from Vistas.vista_conocidos import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import Vistas.database as db
+import Vistas.logica_modificar_invitado as modificar
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -13,6 +14,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.windowsKnown()
             self.pushButton.clicked.connect(self.convertToAdmin)
             self.pushButton_2.clicked.connect(self.deleteKnown)
+            self.pushButton_3.clicked.connect(self.modifyKnown)
 
 
     def windowsKnown(self):
@@ -20,13 +22,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setWindowTitle("Ventana de Conocidos")
         self.pushButton.setText('Convertir')
         self.pushButton_2.setText('Eliminar')
-        self.pushButton_3.setText('3')
+        self.pushButton_3.setText('Modificar')
         self.pushButton_4.setText('4')
         self.fillTable()
     
     def fillTable(self):
         #Especificamos columnas y filas que tendra la tabla
-        columnas = 3
+        columnas = 4
         #Bloqueamos la fila para que no pueda ser editada por el usuario
         self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         #Metodos para seleccionar la fila completa
@@ -51,14 +53,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
+    #Metodo encargado de convertir de usuario normal a invitado
     def convertToAdmin(self):
         try:
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
             seleccion = db.saveAdministrator(id[0].text())
             #Preguntamos si realmente quiere convertir el usuario en administrados
-            buttonReply = QMessageBox.warning(
-                self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            buttonReply = QMessageBox.warning(self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if buttonReply == QMessageBox.Yes:
                 #Aseguramos que la operacion se realice con exito
                 if seleccion == True:
@@ -72,13 +74,34 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QMessageBox.warning(self, "Notificacion de error",
                                 "Ningun campo seleccionado")
 
+    #Metodo encargado de eliminar al usuario
     def deleteKnown(self):
         try:
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
-            print(id[0].text())
+            selection = id[0].text()
+            buttonReply = QMessageBox.warning(self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if buttonReply == QMessageBox.Yes:
+                #Aseguramos que la operacion se realice con exito
+                if db.deleteKnown(selection) == True:
+                    QMessageBox.information(self, 'Eliminar Usuario ',
+                                        'Operacion realizada con exito.')
+                    #Actualizamos la tabla
+                    self.fillTable()
         except:
-            print("Error")
+            QMessageBox.warning(self, "Notificacion de error",
+                            "Ningun campo seleccionado")
+
+    def modifyKnown(self):
+        try:
+            #Seleccionamos solo el id del elemento seleccionado
+            id = self.tableWidget.selectedItems()
+            selection = id[0].text()
+            self.next = modificar.modifyKnown(selection)
+        except:
+            QMessageBox.warning(self, "Notificacion de error",
+                                "Ningun campo seleccionado")
+        
 #Instancia de la ventana para abrir en otra vista
 def known():
     return MainWindow()
