@@ -132,8 +132,7 @@ def findSimilarity(source_image, representation):
     c = np.sum(np.multiply(representation, representation))
 
     return 1 - (a / (np.sqrt(b)*(np.sqrt(c))))
-
-
+    
 #Cargamos el modelo 
 model = loadVggFaceModel()
 #Variable donde se van a cargar los datos de las imagenes
@@ -152,6 +151,8 @@ exit = True
 name =''
 user = 0
 list_access  = []
+know = 0
+name_known = ''
 while(exit):
     #Empezamos la lectura de video
     _, img = camara.read()
@@ -187,8 +188,19 @@ while(exit):
                 #Escribimos los parametros de la cara detectada
                 cv2.putText(img, acierto_str, (int(x+w-140), int(y-10)),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
-                cv2.putText(img, image_name, (int(x+w-130), int(y-50)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
+                #Dibujamos el nombre de la persona conocida
+                for known in db.dataKnown():
+                    if str(known['_id']) == image_name:
+                        know+=1
+                        name_known = known['name']
+                        cv2.putText(img, name_known, (int(x+w-130), int(y-50)),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
+
+                #Dibujamos el nombre de los administradore
+                for root in db.dataRoot():
+                    if str(root['_id']) == image_name:
+                        cv2.putText(img, root['name'], (int(x+w-130), int(y-50)),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
                 found = 1
                 user = 0 
                 list_access.append(abs(round(similarity,2)-100))                
@@ -213,14 +225,13 @@ while(exit):
                    #Borramos la lista
                    del list_access[:]
                    #Hacemos una consulta a la base de datos para saber si es un invitado conocido o es un administrados
+                   
                    for name in db.dataRootAll():
-                       #Hacemos esta comparacion
-                       if str(name['name']) == str(image_name):
-                        #Si concuerdan los datos desplegamos la pantalla de administracion 
-                        admin.startAdmin(str(name['name']))
-                       
-                   
-                   
+                        #Hacemos esta comparacion
+                        if str(name['_id']) == str(image_name):
+                            #Si concuerdan los datos desplegamos la pantalla de administracion
+                            admin.startAdmin()
+                        
         #Si no es detectada algun rostro aumentamos contador y volvemos a relizar el proceso para comprobar que en verdad no es usuario registrado 
         # y pueda ser tratado como invitado       
         if found == 0:
@@ -228,13 +239,19 @@ while(exit):
             cv2.putText(img, 'Invitado', ((x+w-170), (y-10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
             del list_access[:]
-            if user == 5: 
+            if user == 10: 
                 database_images = database_usuarios_desconocios+'{}.jpg'.format(name)
                 cv2.imwrite(database_images, detected_face)
                 user = 0
                 cli.startCliente(database_images)
                 del list_access[:] 
-                
+
+        #Metodo encargado de reconocer las veces que un usuario conocido quiere dejan un mensaje
+        if know == 2:
+            know = 0
+            print('Estas mucho tiempo: '+name_known)
+            name_known = ''
+            del list_access[:]
                 
     #Titulo de la ventana     
     cv2.imshow(title_windows, img)

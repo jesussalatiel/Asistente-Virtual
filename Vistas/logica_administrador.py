@@ -9,7 +9,7 @@ import Vistas.logica_conocidos as conocidos
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
-    def __init__(self, id_administrator):
+    def __init__(self):
         #QtWidgets.QMainWindow.__init__(self)
         super().__init__()
         #Cargamos los componentes correpondientes de la vista administrador
@@ -75,16 +75,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.next = administracion.admnistration()        
         
 #Instanciamos la aplicacion para que podamos avanzar y atrazar en las ventanas
-
-
-def other(id_administrator):
+def other():
     #Instancia de la ventana
-    return MainWindow(id_administrator)
+    return MainWindow()
 
 
-def startAdmin(id_administrator):
+def startAdmin():
     app = QtWidgets.QApplication([])
-    window = MainWindow(id_administrator)
+    window = MainWindow()
     window.show()
     app.exec_()
 

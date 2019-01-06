@@ -45,9 +45,9 @@ def safeData(name, email, nota, imagen, type, audio):
         return False
 
 #Metodo encargado de guardar todos los administradores del sistema
-def saveAdministrator(id_invitado):
+def saveAdministrator(id_invitado):    
     #Realizamos un recorrido en la base para obtener los parametros respectivos del ID del invitado para ser almacenados en administradores
-    for invitado in invitado_conocido.find({}, {'_id': ObjectId(id_invitado), 'name': 1, 'image': 1, 'email':1, 'id_anterior': 1}):
+    for invitado in invitado_conocido.find({'_id': ObjectId(id_invitado)}):
         #Creamos el JSON de insercion de datos que seran guardados en la base 
         query = {
             'name': invitado['name'],
@@ -98,17 +98,30 @@ def decodeKnown():
     #Hacemos una consulta a la base de datos para ver quienes son los usuarios registrados
     for known in invitado_conocido.find():        
         #Creamos el path de la imagen con su respectivo nombre
-        path_image= (path+known['name']+'.jpg')
+        path_image= (path+str(known['_id'])+'.jpg')
         #Abrimos memoria para que pueda escribir la imagen en el path seleccionada
         with open(path_image, 'wb') as f:
             #Escribimos la imagen decodificada en el path establecido
             img = base64.b64decode(known['image'])
             f.write(img)
-            
+
+def decodeAdministration():
+    #Establecemos los usuarios en la base de datos de la red neuronal
+    path = './CNN/database/Usuarios_Registrados/'
+    #Verificamos que exista la carpeta si no la creamos
+    os.makedirs(path, exist_ok=True)
+    for administrador in root.find():
+        path_image = (path+str(administrador['_id'])+'.jpg')
+        with open(path_image, 'wb') as image:
+            img = base64.b64decode(administrador['image'])
+            image.write(img)
+
 #Metodo para obtener todos los datos del usuario conocido
 def dataKnown(): 
     return invitado_conocido.find().sort('name')
-
+def dataRoot():
+    return root.find()
+    
 def dataKnownId(id_invitado):
     for data in invitado_conocido.find({'_id': ObjectId(id_invitado)}):
         return data
@@ -116,6 +129,9 @@ def dataKnownId(id_invitado):
 def dataRootAll():
     return root.find().sort('name')
     
+def dataKnownAll():
+    return invitado_conocido.find()
+
 def updateUserId(id_invitado, name, email):
     modify = {
         "$set":{
@@ -174,6 +190,7 @@ def dataInvitado(id):
         information.append(data['name_invitado'])
         information.append(data['email'])
         information.append(data['nota'])
+        information.append(str(data['_id']))
         information.append(data['date'])
         information.append(data['path_nota_voz'])
     #Retornamos los todos los datos almacenados anteriormente 

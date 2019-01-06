@@ -29,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def fillTable(self):
         #Especificamos columnas y filas que tendra la tabla
-        columnas = 3
+        columnas = 4
         #Bloqueamos la fila para que no pueda ser editada por el usuario
         self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         #Metodos para seleccionar la fila completa
@@ -51,6 +51,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(str(data['name'])))
             self.tableWidget.setItem(
                 i, 2, QtWidgets.QTableWidgetItem(str(data['email'])))
+            self.tableWidget.setItem(
+                i, 3, QtWidgets.QTableWidgetItem(str(data['id_anterior'])))
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
@@ -59,7 +61,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         try:
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
-            seleccion = id[0].text()
+            seleccion = id[0].text()            
             #Preguntamos si realmente quiere convertir el usuario en administrados
             buttonReply = QMessageBox.warning(self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if buttonReply == QMessageBox.Yes:
@@ -67,8 +69,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 if db.saveAdministrator(seleccion) == True:
                     QMessageBox.information(self, 'Convertir en Administrador ',
                                             'Operacion realizada con exito.')
+
                     #Actualizamos la tabla
                     self.fillTable()
+            
         except:
             #self.show()
             #Mandamos un mensaje de error
