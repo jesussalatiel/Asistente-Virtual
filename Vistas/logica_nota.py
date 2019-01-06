@@ -48,10 +48,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     #Metodo encargado de recordar al usuario        
     def recordar(self):
-        name_invitado = str(db.dataInvitado(self._invitado)[0]).upper()        
-        if len(db.safeInvitado(name_invitado, self.image, self._invitado)) > 4:
+        data_invitado = db.dataInvitado(self._invitado)        
+        if len(db.safeInvitado(data_invitado[0], data_invitado[1] , self.image, self._invitado)) > 4:
             QMessageBox.information(self, 'Alta de Invitado ',
-                                    'Se reconocera al nuevo invitado por: {}'.format(name_invitado))
+                                    'Se reconocera al nuevo invitado por: {}'.format(str(data_invitado[0])))
            
     #Metodo para reproducir la nota de voz
     def play(self):

@@ -66,7 +66,7 @@ def deleteKnown(id_invitado):
     return True if (invitado_conocido.delete_one({'_id': ObjectId(id_invitado)}).deleted_count) == 1 else False
 
 #Metodo para guardar a Invitados
-def safeInvitado(name, imagen, id_anterior):
+def safeInvitado(name, email, imagen, id_anterior):
     #Leemos la imagen para ser convertida a escala de grises
     image = cv2.imread(imagen)
     #Guardamos la imagen en escala de grises para el fucninamiento de la red neuronal
@@ -77,6 +77,7 @@ def safeInvitado(name, imagen, id_anterior):
     with open(imagen, 'rb') as imageFile:
         know = {
             'name': name,
+            'email':email,
             'image': base64.b64encode(imageFile.read()),
             'id_anterior': id_anterior
         }
@@ -104,6 +105,23 @@ def decodeKnown():
 #Metodo para obtener todos los datos del usuario conocido
 def dataKnown(): 
     return invitado_conocido.find().sort('name')
+
+def dataKnownId(id_invitado):
+    for data in invitado_conocido.find({'_id': ObjectId(id_invitado)}):
+        return data
+
+def dataRootAll():
+    return root.find()
+    
+def updateUserId(id_invitado, name, email):
+    modify = {
+        "$set":{
+            'name':name,
+            'email':email
+        }
+    }
+    invitado_conocido.update_one({'_id': ObjectId(id_invitado)}, modify)
+    return True 
 
 #Verificar si exite el invitado en usuarios conocidos
 def exitsInvitado(id):

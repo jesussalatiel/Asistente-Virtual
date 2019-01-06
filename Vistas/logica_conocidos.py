@@ -15,6 +15,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.pushButton.clicked.connect(self.convertToAdmin)
             self.pushButton_2.clicked.connect(self.deleteKnown)
             self.pushButton_3.clicked.connect(self.modifyKnown)
+            
 
 
     def windowsKnown(self):
@@ -23,12 +24,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton.setText('Convertir')
         self.pushButton_2.setText('Eliminar')
         self.pushButton_3.setText('Modificar')
-        self.pushButton_4.setText('4')
+        self.pushButton_4.setText('Administrador')
         self.fillTable()
     
     def fillTable(self):
         #Especificamos columnas y filas que tendra la tabla
-        columnas = 4
+        columnas = 3
         #Bloqueamos la fila para que no pueda ser editada por el usuario
         self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         #Metodos para seleccionar la fila completa
@@ -42,14 +43,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Iniciamos filas en 0
         self.tableWidget.setRowCount(0)
         #Iteramos en los datos para mostrar los registros de cada columna
-        for i, data in enumerate(db.dataKnown()):            
+        for i, data in enumerate(db.dataKnown()):       
             #Aumentamos las filas segun la cantidad de registros
             self.tableWidget.insertRow(i)
             self.tableWidget.setItem(
                 i, 0, QtWidgets.QTableWidgetItem(str(data['_id'])))
             self.tableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(str(data['name'])))
             self.tableWidget.setItem(
-                i, 2, QtWidgets.QTableWidgetItem(str(data['id_anterior'])))
+                i, 2, QtWidgets.QTableWidgetItem(str(data['email'])))
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
@@ -80,7 +81,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             #Seleccionamos solo el id del elemento seleccionado
             id = self.tableWidget.selectedItems()
             selection = id[0].text()
-            buttonReply = QMessageBox.warning(self, 'Convertir en Administrador', "Esta seguro de convertir en administrador", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            buttonReply = QMessageBox.warning(self, 'Eliminar Usuario', "Esta seguro de eliminar al invitado", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if buttonReply == QMessageBox.Yes:
                 #Aseguramos que la operacion se realice con exito
                 if db.deleteKnown(selection) == True:
@@ -98,10 +99,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             id = self.tableWidget.selectedItems()
             selection = id[0].text()
             self.next = modificar.modifyKnown(selection)
+            self.close()
         except:
             QMessageBox.warning(self, "Notificacion de error",
                                 "Ningun campo seleccionado")
         
+    
 #Instancia de la ventana para abrir en otra vista
 def known():
     return MainWindow()

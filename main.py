@@ -5,5 +5,5 @@
 #import Vistas.logica_administrador as admin
 #admin.startAdmin()
 
-import Vistas.logica_conocidos as conocidos
-conocidos.startKnown()
+import Vistas.logica_administracion as admin
+admin.startAdministration()
