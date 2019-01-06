@@ -26,10 +26,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Titulo de la ventana
         self.setWindowTitle("Ventana de Administrador")
         #Nombre de los botones
-        self.pushButton.setText('Ver')
-        self.pushButton_2.setText('Conocidos')
+        self.pushButton.setText('Ver Nota')
+        self.pushButton_2.setText('Ver Conocidos')
         self.pushButton_3.setText('Administracion')
-        self.pushButton_4.setText('4')
+        self.pushButton_4.setText('Responder')
         #Especificamos columnas y filas que tendra la tabla
         columnas = 8
         #Bloqueamos la fila para que no pueda ser editada por el usuario

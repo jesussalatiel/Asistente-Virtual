@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
-    <height>464</height>
+    <width>481</width>
+    <height>297</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>481</width>
+    <height>297</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -18,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>270</y>
+      <y>250</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -32,7 +44,7 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>841</width>
+      <width>441</width>
       <height>221</height>
      </rect>
     </property>
@@ -43,7 +55,7 @@
      <number>14</number>
     </property>
     <property name="columnCount">
-     <number>16</number>
+     <number>12</number>
     </property>
     <row/>
     <row/>
@@ -63,40 +75,44 @@
      <property name="text">
       <string>ID</string>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>New Column</string>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>NOMBRE</string>
+      <string>Nombre</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>TIPO</string>
+      <string>Email</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>MENSAJE</string>
+      <string>ID Anterior</string>
      </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>PATH</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>FECHA</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>IMAGEN</string>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column/>
@@ -111,8 +127,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>370</y>
+      <x>100</x>
+      <y>250</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -124,8 +140,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>370</y>
+      <x>180</x>
+      <y>250</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -137,8 +153,8 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>370</y>
+      <x>260</x>
+      <y>250</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -149,23 +165,6 @@
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>882</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuARCHIVO">
-    <property name="title">
-     <string>ARCHIVO</string>
-    </property>
-    <addaction name="actionABRIR"/>
-   </widget>
-   <addaction name="menuARCHIVO"/>
-  </widget>
   <action name="actionABRIR">
    <property name="text">
     <string>ABRIR</string>

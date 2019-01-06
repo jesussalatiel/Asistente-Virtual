@@ -21,10 +21,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def windowsKnown(self):
         #Titulo de la ventana
         self.setWindowTitle("Ventana de Conocidos")
-        self.pushButton.setText('Convertir')
+        self.pushButton.setText('Convertir a Administrador')
         self.pushButton_2.setText('Eliminar')
         self.pushButton_3.setText('Modificar')
-        self.pushButton_4.setText('Administrador')
+        self.pushButton_4.setText('4')
         self.fillTable()
     
     def fillTable(self):
