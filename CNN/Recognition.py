@@ -17,6 +17,8 @@ import cv2, imutils, os, time, shutil, time
 import datetime
 import Vistas.logica_cliente as cli
 import Vistas.logica_administrador as admin
+import Vistas.database as db
+
 #------------------------------------------------------------------------------------------
 #################Configuracion del CPU-GPU
 config = tf.ConfigProto( device_count = {'GPU': 1 , 'CPU': 56} )
@@ -40,14 +42,14 @@ database_usuarios_desconocios = './CNN/database/Usuarios_Desconocidos/'
 #Verificamos que exista la ruta de la carpeta si no procedemos a crearla
 os.makedirs(database_usuarios_desconocios, exist_ok=True)
 #Color de la linea que es mostrada en OpenCV
-color = (0,255,0)
+color = (51, 255, 255)
+#Grosor de Linea
+line_width = 2
 #Ruta de pesos https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view
 weights = './CNN/Assets/vgg_face_weights.h5'
 ##Instancia de la camara 
 camara = cv2.VideoCapture(0)
-################################################################################################
-url = 'http://127.0.0.1:8081/'
-################################################################################################
+
 def preprocess_image(image_path):
     #Procedemos a tratar las imagenes como vector
     #Cargamos la imagen y establecemos un tamaño de entrada
@@ -144,7 +146,7 @@ for file in listdir(database_images):
     path = database_images+'%s.jpg' % (images)
     array_images[images]= model.predict(preprocess_image(path))[0,:] 
     
-
+#Iniciamos la ejecucion de la red neuronal
 print("Servicio Iniciado.")
 exit = True
 name =''
@@ -156,10 +158,9 @@ while(exit):
     #Detectamos solo caras frontales
     faces = face_cascade.detectMultiScale(img, 1.5, 5)
     #Pintamos las caras detectadas
-   
     for (x,y,w,h) in faces:       
         #Dibijamos un rectangulo para mostrar la cara
-        cv2.rectangle(img,(x,y),(x+w, y+h), color, 2) 
+        cv2.rectangle(img, (x, y), (x+w, y+h), color, line_width)
         #Seleccionamos las posiciones de la cara encerrada en el rectangulo
         detected_face = img[int(y):int(y+h), int(x):int(x+w)]
         ##Guardamos el rostro detectado con nuevas medidas
@@ -181,39 +182,53 @@ while(exit):
             #Evaluamos el porcentaje de similitud 
             acierto=(round(similarity,2))
             if(acierto < 0.27): # Si es menor que 0.27 es cara detectada y procedemos a dibijar el nombre y porcentaje de la similitud 
+                #Calculamos el porcentaje de prediccion
                 acierto_str = str(abs(round(similarity,2)-100))+ ' %'
-                print('Es {} en {} %'.format(image_name,abs(round(similarity,2)-100)))
-                cv2.putText(img,acierto_str,(int(x+w-190), int(y-10)), cv2.FONT_HERSHEY_SIMPLEX, 1,color, 2)
-                cv2.putText(img,image_name,(int(x+w-140), int(y-40)), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+                #Escribimos los parametros de la cara detectada
+                cv2.putText(img, acierto_str, (int(x+w-140), int(y-10)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
+                cv2.putText(img, image_name, (int(x+w-130), int(y-50)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
                 found = 1
                 user = 0 
                 list_access.append(abs(round(similarity,2)-100))                
                 break    
+
         #Variables para obtener la fecha 
         date = datetime.datetime.now()
         name = str(date).split('.')[1]
         #Verificamos los rostros presentes en la imagen
-        if len(faces) > 2:
-            print('Se detectaron {} rostros.'.format(len(faces)))
+        if len(faces) >= 2:
             database_images = './CNN/database/Usuarios_Desconocidos/muchas_{}.jpg'.format(name)
             user = 0
             del list_access[:] 
             cv2.imwrite(database_images, img)
-        #Comparamos la lista para crear un promedio de la cara detectada y permitir el acceso
+
+        #Comparamos que exista alguna cara detectada por la red
         if found == 1: 
+            #Verificamos que escanee 5 veces para obtener un promedio y verificar si realmente es una cara
             if len(list_access) > 5:
+                #Sumamos la lista de porcentajes y lo dividimos por la cantidad de usuario si es mayor a 95 damos por hecho que efectivamente hay una persona conocida
                if (sum(list_access) // len(list_access)) > 95:
+                   #Borramos la lista
                    del list_access[:]
-                   admin.startAdmin()
+                   #Hacemos una consulta a la base de datos para saber si es un invitado conocido o es un administrados
+                   for name in db.dataRootAll():
+                       #Hacemos esta comparacion
+                       if str(name['name']) == str(image_name):
+                        #Si concuerdan los datos desplegamos la pantalla de administracion 
+                        admin.startAdmin(str(name['name']))
+                       
                    
                    
         #Si no es detectada algun rostro aumentamos contador y volvemos a relizar el proceso para comprobar que en verdad no es usuario registrado 
         # y pueda ser tratado como invitado       
         if found == 0:
             user += 1
-            print("{}. Desconocido".format(user))
-            cv2.putText(img,'Invitado',((x+w-170), (y-10)), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
-            if user == 10: 
+            cv2.putText(img, 'Invitado', ((x+w-170), (y-10)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, color, line_width)
+            del list_access[:]
+            if user == 5: 
                 database_images = database_usuarios_desconocios+'{}.jpg'.format(name)
                 cv2.imwrite(database_images, detected_face)
                 user = 0
