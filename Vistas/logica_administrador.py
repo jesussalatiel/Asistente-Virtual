@@ -85,7 +85,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def deleteRegister(self):
         id = self.getID()
         if (id) == None:
-            print('Hola')
+            print()
         else:
             buttonReply = QMessageBox.warning(
                 self, 'Eliminacion de Registro', "Esta seguro de eliminar el registro", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -98,7 +98,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def sendEmail(self):
         id = self.getID()
         if (id) == None:
-            print('Hola')
+            print()
         else:
             self.next = email.windowsEmail(id)
 

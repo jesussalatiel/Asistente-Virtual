@@ -34,9 +34,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             except:
                 QMessageBox.warning(self, 'Envio de Email ', 'No existe conexion a internet.')
                 
-                
-
-
     def buildEmail(self,text, destinatario):
         # Construimos el mensaje simple
         id = db.dataInvitado(self._id_invitado)
