@@ -18,9 +18,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Titulo de la ventana
         self.setWindowTitle("Ventana de Administrador")
         #Nombre de los botones
-        self.pushButton.setText('1')
-        self.pushButton_2.setText('2')
-        self.pushButton_3.setText('3')
+        self.pushButton.setText('Modificar')
+        self.pushButton_2.setText('Eliminar')
+        self.pushButton_3.setText('Notificar')
         self.pushButton_4.setText('4')
         
         #Especificamos columnas y filas que tendra la tabla
