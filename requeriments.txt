@@ -1,4 +1,3 @@
-#Comando para ejecutar el txt conda install --yes --file requirements.txt
 easygui
 SpeechRecognition
 pyaudio
