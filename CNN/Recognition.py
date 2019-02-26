@@ -264,3 +264,6 @@ while(exit):
 #Liberar Memoria
 camara.release()
 cv2.destroyAllWindows()
+
+
+## https://www.youtube.com/watch?v=6CzY3WQVYUo
