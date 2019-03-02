@@ -1,9 +1,12 @@
 # Asistente Virtual Basado en Vision por Computadora
-Asistente Virtual encargado de identificar personas para tener una mejor atención al usuario.
+Implementación de un sistema computacional que funcione como Asistente Virtual basado en Visión por Computadora, haciendo uso de tecnicas de Visión Artificial para adquirir procesar y analizar imagenes del mundo real. Ademas de implementar Redes Neuronales Convolucionales para el reconocimiento de rostros humanos esto para que el sistema pueda identificar a los usuarios propietarios y usuarios visitantes.
+
 
 ## Requisitos de Instalación
 - Python 3
 - MongoDB
+## Desarrollo de Interfaz Gráfica
+- Web de Referencía (https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
 
 ## Librerias necesarias a instalar (Requeriments.txt)
 - easygui
@@ -24,3 +27,19 @@ Asistente Virtual encargado de identificar personas para tener una mejor atenci�
 - djongo
 - requests 
 - pyglet
+
+## Proceso de Instalación
+- Crear un entorno virtual de Python 3 en Windows 10.
+-- $ python -m venv asistente
+- Ya creado el entorno procedemos a movernos a la carpeta
+-- cd asistente
+- Activamos el entorno virtual
+-- cd Scripts
+-- activate
+- Procedemos a instalar todas las librerias necesarias para el desarrollo y ejecución del programa
+-- pip install -r /path/requeriments.txt 
+- Fin de proceso !!
+
+## Ejecución del Software
+- Ejecutamos el archivo principal 
+- python main.py
