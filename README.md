@@ -42,7 +42,7 @@ npm install -g create-react-app
 ```
 - Nos posicionamos en la carpeta que contiene la parte gráfica de la web
 ```bash
-cd MERN/frontend/gui
+cd Django-React/frontend/gui
 ```
 - Iniciamos el servidor 
 ```bash
@@ -51,11 +51,15 @@ npm start
 ## Desarollo del Servidor (BackEnd)
 - Nos posicionamos en la carpeta que contiene la parte del backend
 ```bash
-cd MERN/backend/src
+cd Django-React/backend/src
 ```
 - Iniciamos el servidor
 ```bash
 python manage.py runserver
 ```
+### Contraseñas del Django
+localhost:8000/admin
+user: admin
+pass: admin
 
 ### Estoy en proceso de creación del bat para instalación automatico
