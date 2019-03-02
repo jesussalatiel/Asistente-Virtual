@@ -5,9 +5,6 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 ## Requisitos de Instalación
 - Python 3
 - MongoDB
-## Desarrollo de Interfaz Gráfica
-[Web de Referencía para el desarrollo de interfaces gráficas con PyQt.](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
-
 ## Proceso de Instalación para Desarrollo 
 - Crear un entorno virtual de Python 3 en Windows 10.
 ```bash
@@ -35,6 +32,30 @@ pip install -r /path/requeriments.txt
 - Ejecutamos el archivo principal 
 ```bash
 python main.py
+```
+## Desarrollo de Interfaz Gráfica
+[Web de Referencía para el desarrollo de interfaces gráficas con PyQt.](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
+## Desarrollo de Web (FrontEnd)
+- Instalamos React
+```bash
+npm install -g create-react-app
+```
+- Nos posicionamos en la carpeta que contiene la parte gráfica de la web
+```bash
+cd MERN/frontend/gui
+```
+- Iniciamos el servidor 
+```bash
+npm start
+```
+## Desarollo del Servidor (BackEnd)
+- Nos posicionamos en la carpeta que contiene la parte del backend
+```bash
+cd MERN/backend/src
+```
+- Iniciamos el servidor
+```bash
+python manage.py runserver
 ```
 
 ### Estoy en proceso de creación del bat para instalación automatico

@@ -16,3 +16,4 @@ django
 djongo
 requests 
 pyglet
+djangorestframework
