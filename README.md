@@ -6,7 +6,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 - Python 3
 - MongoDB
 ## Desarrollo de Interfaz Gráfica
-- Web de Referencía (https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
+[Web de Referencía] (https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
 
 ## Librerias necesarias a instalar (Requeriments.txt)
 - easygui
@@ -30,7 +30,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 
 ## Proceso de Instalación
 - Crear un entorno virtual de Python 3 en Windows 10.
-{% filename %} python -m venv asistente {% endfilename %}
+" python -m venv asistente "
 - Ya creado el entorno procedemos a movernos a la carpeta
 {% filename %} cd asistente {% endfilename %}
 - Activamos el entorno virtual
