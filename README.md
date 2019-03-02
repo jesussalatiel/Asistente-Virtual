@@ -58,8 +58,10 @@ cd Django-React/backend/src
 python manage.py runserver
 ```
 ### Contraseñas del Django
+```bash
 localhost:8000/admin
-user: admin
-pass: admin
+```
+- user: admin
+- pass: admin
 
 ### Estoy en proceso de creación del bat para instalación automatico
