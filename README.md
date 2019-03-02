@@ -6,27 +6,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 - Python 3
 - MongoDB
 ## Desarrollo de Interfaz Gráfica
-[Web de Referencía para el desarrollo de interfaces gráficas con Pyqt](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
-
-## Librerias necesarias a instalar (Requeriments.txt)
-- easygui
-- SpeechRecognition
-- pyaudio
-- tensorflow-gpu
-- keras
-- scipy
-- scikit-learn
-- opencv-python
-- h5py
-- matplotlib
-- pywin32
-- pymedia
-- pymongo
-- imutils
-- django
-- djongo
-- requests 
-- pyglet
+[Web de Referencía para el desarrollo de interfaces gráficas con PyQt.](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
 
 ## Proceso de Instalación para Desarrollo 
 - Crear un entorno virtual de Python 3 en Windows 10.
