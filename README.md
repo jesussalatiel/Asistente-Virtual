@@ -30,16 +30,26 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 
 ## Proceso de Instalación
 - Crear un entorno virtual de Python 3 en Windows 10.
-" python -m venv asistente "
+```bash
+ python -m venv asistente 
+```
 - Ya creado el entorno procedemos a movernos a la carpeta
-{% filename %} cd asistente {% endfilename %}
+```bash
+cd asistente
+```
 - Activamos el entorno virtual
-{% filename %} cd Scripts {% endfilename %}
-{% filename %} activate {% endfilename %}
+```bash
+cd Scripts 
+```
+```bash
+activate 
+```
 - Procedemos a instalar todas las librerias necesarias para el desarrollo y ejecución del programa
-{% filename %} pip install -r /path/requeriments.txt {% endfilename %}
+```bash
+pip install -r /path/requeriments.txt 
+```
 - Fin de proceso !!
 
 ## Ejecución del Software
 - Ejecutamos el archivo principal 
-{% filename %} python main.py {% endfilename %}
+``` python main.py ```
