@@ -28,7 +28,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 - requests 
 - pyglet
 
-## Proceso de Instalación
+## Proceso de Instalación para Desarrollo 
 - Crear un entorno virtual de Python 3 en Windows 10.
 ```bash
  python -m venv asistente 
@@ -56,3 +56,5 @@ pip install -r /path/requeriments.txt
 ```bash
 python main.py
 ```
+
+### Estoy en proceso de creación del bat para instalación automatico
