@@ -6,7 +6,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 - Python 3
 - MongoDB
 ## Desarrollo de Interfaz Gráfica
-[Web de Referencía] (https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
+[Web de Referencía](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
 
 ## Librerias necesarias a instalar (Requeriments.txt)
 - easygui
@@ -37,10 +37,11 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 ```bash
 cd asistente
 ```
-- Activamos el entorno virtual
+- Procedemos a movernos a Scripts para activar el entorno
 ```bash
 cd Scripts 
 ```
+- Activamos el entorno virtual
 ```bash
 activate 
 ```
