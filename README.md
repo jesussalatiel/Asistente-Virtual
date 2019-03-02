@@ -6,7 +6,7 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 - Python 3
 - MongoDB
 ## Desarrollo de Interfaz Gráfica
-[Web de Referencía](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
+[Web de Referencía para el desarrollo de interfaces gráficas con Pyqt](https://medium.com/@hektorprofe/primeros-pasos-en-pyqt-5-y-qt-designer-programas-gr%C3%A1ficos-con-python-6161fba46060)
 
 ## Librerias necesarias a instalar (Requeriments.txt)
 - easygui
@@ -53,4 +53,6 @@ pip install -r /path/requeriments.txt
 
 ## Ejecución del Software
 - Ejecutamos el archivo principal 
-``` python main.py ```
+```bash
+python main.py
+```
