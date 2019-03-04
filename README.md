@@ -5,6 +5,8 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 ## Requisitos de Instalación
 - Python 3
 - MongoDB
+## Descargar los pesos para que pueda funcionar el algoritmo
+- [Pesos para la red](https://drive.google.com/file/d/1zX1yBsAhePVNwd0AZ_aikF548l-HFXoC/view?usp=sharing) 
 ## Proceso de Instalación para Desarrollo 
 - Crear un entorno virtual de Python 3 en Windows 10.
 ```bash
