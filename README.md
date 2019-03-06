@@ -5,24 +5,26 @@ Implementación de un sistema computacional que funcione como Asistente Virtual 
 ## Requisitos de Instalación
 - Python 3
 - MongoDB
+- [Anaconda con Python 3](https://www.anaconda.com/distribution/)
 ## Descargar los pesos para que pueda funcionar el algoritmo
 - [Los pesos se tienen que ser ubicados en la ruta CNN/Assets](https://drive.google.com/file/d/1zX1yBsAhePVNwd0AZ_aikF548l-HFXoC/view?usp=sharing) 
 ## Proceso de Instalación para Desarrollo 
-- Crear un entorno virtual de Python 3 en Windows 10.
+- Crear un entorno virtual de Python 3 en Anaconda.
 ```bash
- python -m venv asistente 
-```
-- Ya creado el entorno procedemos a movernos a la carpeta
-```bash
-cd asistente
-```
-- Procedemos a movernos a Scripts para activar el entorno
-```bash
-cd Scripts 
+ conda create -n Asistente
 ```
 - Activamos el entorno virtual
 ```bash
-activate 
+activate Asistente
+```
+- Instalamos TensorFlow en Anaconda
+```bash
+  conda install -c anaconda tensorflow-gpu (Para Tarjetas Gráficas NVidia)
+  conda install -c anaconda tensorflow  (Sin tarjetas gráficas)
+```
+- Instalamos OpenCv
+```bash
+conda install -c conda-forge opencv
 ```
 - Procedemos a instalar todas las librerias necesarias para el desarrollo y ejecución del programa
 ```bash
