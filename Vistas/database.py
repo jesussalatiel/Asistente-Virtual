@@ -118,7 +118,8 @@ def decodeAdministration():
 
 #Metodo para obtener todos los datos del usuario conocido
 def dataKnown(): 
-    return invitado_conocido.find().sort('name')
+    return invitado_conocido.find()
+
 def dataRoot():
     return root.find()
     
@@ -128,7 +129,10 @@ def dataKnownId(id_invitado):
 
 def dataRootAll():
     return root.find().sort('name')
-    
+
+def deleteRoot(id_root):
+    return True if (root.delete_one({'_id': ObjectId(id_root)}).deleted_count) == 1 else False
+
 def dataKnownAll():
     return invitado_conocido.find()
 

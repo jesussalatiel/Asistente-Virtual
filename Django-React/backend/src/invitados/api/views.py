@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from invitados.models import Invitado
 from .serializers import InvitadoSerializer
 
@@ -7,6 +7,9 @@ class InvitadoListView(ListAPIView):
     serializer_class = InvitadoSerializer
 
 
-class InvitadoDetailView(ListAPIView):
+class InvitadoDetailView(RetrieveAPIView):
     queryset = Invitado.objects.all()
     serializer_class = InvitadoSerializer
+
+
+

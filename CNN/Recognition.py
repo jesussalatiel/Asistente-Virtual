@@ -49,6 +49,7 @@ weights = './CNN/Assets/vgg_face_weights.h5'
 ##Instancia de la camara 
 camara = cv2.VideoCapture(0)
 
+
 def preprocess_image(image_path):
     #Procedemos a tratar las imagenes como vector
     #Cargamos la imagen y establecemos un tamaño de entrada
@@ -210,10 +211,10 @@ while(exit):
         name = str(date).split('.')[1]
         #Verificamos los rostros presentes en la imagen
         if len(faces) >= 2:
-            database_images = './CNN/database/Usuarios_Desconocidos/muchas_{}.jpg'.format(name)
+            #database_images = './CNN/database/Usuarios_Desconocidos/muchas_{}.jpg'.format(name)
             user = 0
             del list_access[:] 
-            cv2.imwrite(database_images, img)
+            #cv2.imwrite(database_images, img)
 
         #Comparamos que exista alguna cara detectada por la red
         if found == 1: 
@@ -249,7 +250,7 @@ while(exit):
         #Esta ventana ya es ma personalizada
         if know == 5:
             know = 0
-            print('Estas mucho tiempo: '+name_known)
+            print('Que se te ofrece: '+name_known)
             name_known = ''
             del list_access[:]
                 

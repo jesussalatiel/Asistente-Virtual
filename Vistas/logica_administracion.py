@@ -2,6 +2,8 @@ from Vistas.vista_administracion import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import Vistas.database as db
+import Vistas.logica_modificar_admin as modificarRoot
+import Vistas.logica_agenda as agenda
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -10,8 +12,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             #Cargamos los componentes correpondientes de la vista administrador
             self.setupUi(self)
             self.show()
-            self.windowsAdministration()
-            self.pushButton.clicked.connect(self.prueba)
+            self.pushButton.clicked.connect(self.modifyRegister)
+            self.pushButton_2.clicked.connect(self.deleteRegister)
+            self.pushButton_3.clicked.connect(self.notifyRegister)
+            self.pushButton_4.clicked.connect(self.sendRegister)
             self.formatTable()
 
     def formatTable(self):
@@ -21,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton.setText('Modificar')
         self.pushButton_2.setText('Eliminar')
         self.pushButton_3.setText('Notificar')
-        self.pushButton_4.setText('4')
+        self.pushButton_4.setText('C.Notificacion')
         
         #Especificamos columnas y filas que tendra la tabla
         columnas = 5
@@ -50,21 +54,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tableWidget.setItem(
                 i, 2, QtWidgets.QTableWidgetItem(str(data['email'])))
             self.tableWidget.setItem(
-                i, 3, QtWidgets.QTableWidgetItem(str(data['id_anterior'])))
+                i, 3, QtWidgets.QTableWidgetItem(str('Password')))
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
-    def windowsAdministration(self):
-        #Titulo de la ventana
-        self.setWindowTitle("Ventana de Administracion")
-        self.pushButton.setText('1')
-        self.pushButton_2.setText('2')
-        self.pushButton_3.setText('3')
-        self.pushButton_4.setText('4')
+    def getID(self, elemento=0 ):
+        try:
+            id = self.tableWidget.selectedItems()
+            return(id[elemento].text())
+        except:
+            #Lanzamos excepcion en caso de que el usuario no seleccione ningun elemento de la tabla
+            #Abrimos de nuevo la ventana
+            self.show()
+            #Mandamos un mensaje de error
+            QMessageBox.warning(self, "Notificacion de error",
+                                "Ningun campo seleccionado")
 
-    def prueba(self):
-        print("pruebas")
-        
+    def modifyRegister(self):
+       # id, name, email = 
+        print("Modificar {}".format(self.getID(0)))
+        self.next = modificarRoot.adminModificar()
+
+    def deleteRegister(self):
+        buttonReply = QMessageBox.warning(
+            self, 'Eliminacion de Registro', "Esta seguro de eliminar el registro\n{}".format(self.getID(1)), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if buttonReply == QMessageBox.Yes:
+            if (db.deleteRoot(self.getID(0))== True):
+                QMessageBox.information(self, 'Eliminacion de Recordatorio ',
+                                        'Eliminacion Exitosa')
+                #Recargamos la tabla para ver los cambios de la eliminacion
+                self.formatTable()
+
+    def notifyRegister(self):
+        print('Notificar {}'.format(self.getID(1)))
+
+    def sendRegister(self):
+        print('Abrir Agenda {}'.format(self.getID()))
+        self.next = agenda.agenda()
+
 def admnistration():
     #Instancia de la ventana
     return MainWindow()
