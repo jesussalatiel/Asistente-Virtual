@@ -58,22 +58,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #Cerramos la conexion a la base de datos
         db.closeConection()
 
-    def getID(self, elemento=0 ):
+    def getID(self, propiedad=0 ):
         try:
             id = self.tableWidget.selectedItems()
-            return(id[elemento].text())
+            return(id[propiedad].text())
         except:
+            return None
             #Lanzamos excepcion en caso de que el usuario no seleccione ningun elemento de la tabla
             #Abrimos de nuevo la ventana
-            self.show()
+            #self.show()
             #Mandamos un mensaje de error
-            QMessageBox.warning(self, "Notificacion de error",
-                                "Ningun campo seleccionado")
+            #QMessageBox.warning(self, "Notificacion de error",
+             #                   "Ningun campo seleccionado")
+            
 
     def modifyRegister(self):
-       # id, name, email = 
-        print("Modificar {}".format(self.getID(0)))
-        self.next = modificarRoot.adminModificar()
+        if self.getID(0) == None:
+                QMessageBox.warning(self, "Notificacion de error",
+                                 "Ningun campo seleccionado")
+        else:
+            self.next = modificarRoot.adminModificar(self.getID(0))
 
     def deleteRegister(self):
         buttonReply = QMessageBox.warning(

@@ -59,7 +59,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/prefijoNuevo/{}\"/></p></body></html>".format('./Diseño de Interfaces/5c898792631d5221e4663915.jpg')))
+        self.label.setText(_translate(
+            "MainWindow", "<html><head/><body><p><img src=\":/cct/Salatiel.jpg\"/></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "Tomar Nueva"))
         self.pushButton_2.setText(_translate("MainWindow", "Cancelar"))
         self.pushButton_3.setText(_translate("MainWindow", "Guardar"))

@@ -1,11 +1,13 @@
 #Cargamos la base de datos en donde se encuentra registrados los usuarios
-#import Vistas.database as db
+import Vistas.database as db
 #Decodificamos las imageness
-#db.decodeKnown()
-#db.decodeAdministration()
+db.decodeKnown()
+db.decodeAdministration()
 #Iniciamos el reconocimiento e identificacion de rostros
-#import CNN.Recognition as rec
+import CNN.Recognition as rec
 
-import Vistas.logica_administracion as admin
+#import Vistas.logica_administracion as admin
 
-admin.startAdministration()
+#admin.startAdministration()
+
+
