@@ -3,5 +3,6 @@ CNN/Assets/
 CNN/Assets/vgg_face_weights.h5
 CNN/database/
 
-CNN/Train/data/
-CNN/preview/
+CNN/Train/data
+CNN/preview
+CNN/train

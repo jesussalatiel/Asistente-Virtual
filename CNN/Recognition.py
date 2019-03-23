@@ -121,7 +121,7 @@ def loadVggFaceModel():
     #Cargamos pesos ya pre-entrenado
     model.load_weights(weights)
     #vgg_face_descriptor.load_weights(weights)
-    
+    model.summary()
     return vgg_face_descriptor
 
 def findSimilarity(source_image, representation):
