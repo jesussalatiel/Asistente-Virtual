@@ -45,7 +45,7 @@ color = (51, 255, 255)
 #Grosor de Linea
 line_width = 2
 #Ruta de pesos https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view
-weights = '../CNN/Assets/otro.h5'
+weights = './CNN/Assets/vgg_face_weights.h5'
 ##Instancia de la camara 
 camara = cv2.VideoCapture(0)
 
