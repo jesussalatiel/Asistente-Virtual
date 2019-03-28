@@ -76,8 +76,11 @@ def extract_features(directory, sample_count):
     #Pass data through convolutional base
     i = 0
     for inputs_batch, labels_batch in generator:
+        
+
         features_batch = conv_base.predict(inputs_batch)
-        features[i * v_batch_size: (i + 1) * v_batch_size] = features_batch
+        features[i * v_batch_size: (i + 1) *
+                 v_batch_size] = features_batch
         labels[i * v_batch_size: (i + 1) * v_batch_size] = labels_batch
         i += 1
         if i * v_batch_size >= sample_count:
@@ -92,25 +95,24 @@ test_feature, test_labels = extract_features(test_dir, test_size)
 
 #Define model
 model = models.Sequential()
-model.add(ZeroPadding2D((1, 1), input_shape=(img_width, img_height, 3)))
-model.add(Convolution2D(64, (3, 3), activation='relu'))
-model.add(ZeroPadding2D((1, 1)))
-model.add(Convolution2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+model.add(layers.Flatten(input_shape=(7, 7, 512)))
+model.add(layers.Dense(256, activation='relu', input_dim=(7*7*512)))
+model.add(layers.Dropout(0.5))
+model.add(layers.Dense(1, activation='sigmoid'))
 model.summary()
 
 # Compile model
 model.compile(optimizer=optimizers.Adam(),
               loss='binary_crossentropy',
-              metrics=['acc'])
+              metrics=['acc', 'mse'])
 
-'''
+
 # Train model
 history = model.fit(train_features, train_labels,
                     epochs=100,
                     batch_size=v_batch_size,
                     validation_data=(validation_features, validation_labels))
-
+'''
 # Save model
 model.save('../Assets/dogs_cat_gap.h5')
 #Plot results
@@ -134,7 +136,7 @@ plt.title('Training and validation loss')
 plt.legend()
 
 plt.show()
-'''
+
 
 # Define function to visualize predictions
 def visualize_predictions(classifier, n_cases):
@@ -175,3 +177,5 @@ def visualize_predictions(classifier, n_cases):
 
 # Visualize predictions
 visualize_predictions(model, 5)
+'''
+tf.keras.backend.clear_session()

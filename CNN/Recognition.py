@@ -45,7 +45,7 @@ color = (51, 255, 255)
 #Grosor de Linea
 line_width = 2
 #Ruta de pesos https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view
-weights = './CNN/Assets/vgg_face_weights.h5'
+weights = '../CNN/Assets/otro.h5'
 ##Instancia de la camara 
 camara = cv2.VideoCapture(0)
 
@@ -167,7 +167,7 @@ while(exit):
         ##Guardamos el rostro detectado con nuevas medidas
         detected_face = cv2.resize(detected_face, (size_width, size_height))
         #Convertimos la imagen a matriz
-        img_pixels = image.img_to_array(detected_face).astype(np.float32)
+        img_pixels = image.img_to_array(detected_face).astype(np.float32) 
         #Unimos la matriz 
         img_pixels = np.expand_dims(img_pixels, axis= 0)
         # Hacemos una prediccion 

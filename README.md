@@ -68,4 +68,5 @@ localhost:8000/admin
 - user: admin
 - pass: admin
 
-### Estoy en proceso de creación del bat para instalación automatico
+### Set de datos para entrenamiento 
+[Data Set](http://tamaraberg.com/faceDataset/index.html)
