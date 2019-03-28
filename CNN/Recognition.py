@@ -119,9 +119,9 @@ def loadVggFaceModel():
     #Ingresamos los datos al modelo
     vgg_face_descriptor = Model(inputs = model.layers[0].input, outputs = model.layers[-2].output)
     #Cargamos pesos ya pre-entrenado
-    model.load_weights(weights)
-    #vgg_face_descriptor.load_weights(weights)
-    model.summary()
+    #model.load_weights(weights)
+    vgg_face_descriptor.load_weights(weights)
+    
     return vgg_face_descriptor
 
 def findSimilarity(source_image, representation):
