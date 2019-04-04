@@ -1,0 +1,5 @@
+http://www.robots.ox.ac.uk/~vgg/publications/2015/Parkhi15/parkhi15.pdf
+https://aboveintelligent.com/face-recognition-with-keras-and-opencv-2baf2a83b799
+https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
+http://www.robots.ox.ac.uk/~vgg/software/vgg_face/
+https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html

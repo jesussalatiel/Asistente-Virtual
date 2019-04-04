@@ -6,3 +6,6 @@ CNN/database/
 CNN/Train/data/
 CNN/preview/
 CNN/train/
+
+/CNN/PruebasVGG/vgg_block1_conv1_7x7.png
+/CNN/PruebasVGG/vgg_block5_conv1_17x17.png
